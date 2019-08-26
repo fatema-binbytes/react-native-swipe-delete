@@ -1,0 +1,22 @@
+{
+  "name": "react-native-swipe-delete-view",
+  "version": "1.0.3",
+  "description": "this package use for swipe and delete list data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "npm-swipe-delete-list",
+    "react-native-swipe-delete",
+    "swipe-delete",
+    "flatList-delete-view"
+  ],
+  "author": "Fatema Patel",
+  "license": "ISC",
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0"
+  },
+  "devDependencies": {}
+}
