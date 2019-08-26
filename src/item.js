@@ -10,9 +10,7 @@ import {
  } from "react-native";
 import PropTypes from "prop-types";
 import styles from './item-style';
-import LeftComponent from './leftComponent'
-import RightComponent from './rightComponent' 
-
+import BackgroundComponent from './backgroundRow'
 
 class Item extends Component {
   constructor(props) {
@@ -72,7 +70,7 @@ class Item extends Component {
 
   render() {
     const { displayPicture, chat, time, userIdName,} = this.props.item;
-    const { leftComponent, rightComponent } = this.props;
+    const { backComponent } = this.props;
     return (
       <View>
         <View
@@ -84,8 +82,7 @@ class Item extends Component {
           ]}
         >
           <View style={[styles.backRow]}>
-           {leftComponent ? leftComponent : <LeftComponent onPress={this.touchUndo}/>}
-           {rightComponent ? rightComponent : <RightComponent onPress={this.touchUndo}/>}
+           {backComponent ? backComponent : <BackgroundComponent/>}
           </View>
           <Animated.View
             style={[

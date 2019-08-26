@@ -9,9 +9,7 @@ const styles = StyleSheet.create({
       width: "100%",
       padding: 15,
       paddingTop: 22,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between"
+     
     },
     animatedContainer: {
       flexDirection: "row",

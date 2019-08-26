@@ -1,84 +1,123 @@
 import React, { Component } from "react";
-import { View, FlatList, UIManager, LayoutAnimation } from "react-native";
-
-import Item from "./src/item";
+import {
+  View,
+  Text,
+  Image,
+  PanResponder,
+  Animated,
+  Dimensions,
+  UIManager,
+ } from "react-native";
 import PropTypes from "prop-types";
+import styles from './item-style';
+import BackgroundComponent from './backgroundRow'
 
-class App extends Component {
+class Item extends Component {
   constructor(props) {
     super(props);
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
     this.state = {
-      closedIndices: [],
-      data:this.props.data,
-      currentLength:this.props.data.length
+      backgroundColor: "white",
+      previousIndex: this.props.previous,
+      currentIndex: this.props.index,
+      undo: false
     };
-  }
-  shouldRender = index => {
-    return this.state.closedIndices.indexOf(index) === -1;
-  };
-  delete(index) {
-    var CustomLayoutSpring = {
-      duration: 200,
-      create: {
-        type: LayoutAnimation.Types.spring,
-        property: LayoutAnimation.Properties.scaleXY,
-        springDamping: 10
-      },
-      update: {
-        type: LayoutAnimation.Types.spring,
-        springDamping: 10
-      }
-    };
-   
-    if (this.state.previous != -1) {
-      LayoutAnimation.configureNext(CustomLayoutSpring);
+    this.translateX = new Animated.Value(0);
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
-      this.setState({
-        closedIndices: [...this.state.closedIndices, index]
-      });
-    }
-    let data = this.props.data;
-    this.props.onSwipe(index)
-    if(data.length < this.state.currentLength){
-        delete this.state.closedIndices[this.state.closedIndices.length - 1]
+      onPanResponderMove: (e, gestureState) => {
+        this.setState({ backgroundColor: "#178044", undo: false });
+        Animated.event([null, { dx: this.translateX }])(e, gestureState);
+      },
+      onPanResponderRelease: (e, { vx, dx }) => {
+        this.touchRelease(vx, dx);
       }
-    };
-  onRelease(index) {
-    this.setState({ previous: index });
+    });
   };
+  touchRelease(vx, dx) {
+    const screenWidth = Dimensions.get("window").width;
+    if (Math.abs(vx) >= 0.5 || Math.abs(dx) >= 0.5 * screenWidth) {
+      Animated.timing(this.translateX, {
+        toValue: dx > 0 ? screenWidth : -screenWidth,
+        duration: 200
+      }).start(() => {
+        this.props.onRelease();
+        setTimeout(() => {
+          if (!this.state.undo) {
+            this.props.onGrant(this.props.index);
+          }
+        }, 500);
+      });
+    } else {
+      Animated.spring(this.translateX, {
+        toValue: 0,
+        bounciness: 10,
+      }).start();
+    }
+  };
+  touchUndo = () => {
+    this.setState({ undo: true });
+    Animated.timing(this.translateX, {
+      toValue: 0,
+      duration: 200
+    }).start(this.props.onRelease(this.state.previousIndex));
+  };
+
   render() {
+    const { displayPicture, chat, time, userIdName,} = this.props.item;
+    const { backComponent } = this.props;
     return (
-      <View style={{ backgroundColor: "#178044" }}>
-        <FlatList
-          data={this.props.data.slice()}
-          renderItem={({ item, index }) => {
-            return (
-              this.shouldRender(index) && (
-                <View>
-                  <Item
-                    item={item}
-                    onGrant={i => this.delete(i)}
-                    onRelease={() => this.onRelease(index)}
-                    previous={this.state.previous}
-                    index={index}
-                    leftComponent={this.props.leftComponent }
-                    rightComponent={this.props.rightComponent }
-                  />
+      <View>
+        <View
+          style={[
+            styles.container,
+            {
+              backgroundColor: this.state.backgroundColor
+            }
+          ]}
+        >
+          <View style={[styles.backRow]}>
+           {backComponent ? backComponent : <BackgroundComponent/>}
+          </View>
+          <Animated.View
+            style={[
+              {
+                transform: [
+                  {
+                    translateX: this.translateX
+                  }
+                ]
+              },
+              styles.animatedContainer
+            ]}
+            {...this._panResponder.panHandlers}
+          >
+            <View style={{ paddingLeft: 2 }}>
+              <Image style={styles.image} source={displayPicture} />
+            </View>
+            <View style={styles.subContainer}>
+              <View>
+                <View style={styles.txtContainer}>
+                  <Text style={styles.txt}>{userIdName}</Text>
+                  <Text style={{ color: "#418bfa" }}>{time}</Text>
                 </View>
-              )
-            );
-          }}
-          keyExtractor={(item, index) => `${index}`}
-         />
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ flex: 1 }}>{chat}</Text>
+                </View>
+              </View>
+            </View>
+          </Animated.View>
+        </View>
       </View>
     );
   }
 }
-App.propTypes = {
-  data:  PropTypes.array.isRequired,
-  onSwipe: PropTypes.func,
+Item.propTypes = {
+  item:  PropTypes.object.isRequired,
 };
-
-export default App;
+export default Item;

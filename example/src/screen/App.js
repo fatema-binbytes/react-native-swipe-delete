@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Item from "react-native-swipe-delete-view";
 
-import LeftComponent from '../component/leftComponent'
-import RightComponent from '../component/rightComponent'
+import BackComponent from '../component/backgroundRow';
+
 
 class App extends Component {
   constructor(props) {
@@ -97,8 +97,7 @@ class App extends Component {
       <Item 
         onSwipe={i => this.onDelete(i)} 
         data={this.state.data} 
-        leftComponent={<LeftComponent/>}
-        rightComponent={<RightComponent/>}
+        backComponent={<BackComponent/>}
       />
     )
   }
