@@ -10,7 +10,7 @@ import {
  } from "react-native";
 import PropTypes from "prop-types";
 import styles from './item-style';
-import BackgroundComponent from './backgroundRow'
+import BackgoundView from './backgoundView'
 
 class Item extends Component {
   constructor(props) {
@@ -70,7 +70,7 @@ class Item extends Component {
 
   render() {
     const { displayPicture, chat, time, userIdName,} = this.props.item;
-    const { backComponent } = this.props;
+    const { backgoundView } = this.props;
     return (
       <View>
         <View
@@ -82,7 +82,7 @@ class Item extends Component {
           ]}
         >
           <View style={[styles.backRow]}>
-           {backComponent ? backComponent : <BackgroundComponent/>}
+           {backgoundView ? backgoundView : <BackgoundView/>}
           </View>
           <Animated.View
             style={[
