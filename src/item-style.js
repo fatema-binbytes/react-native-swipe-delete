@@ -1,23 +1,23 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
       zIndex: 0
     },
     backRow: {
-      position: "absolute",
-      width: "100%",
+      position: 'absolute',
+      width: '100%',
       padding: 15,
       paddingTop: 22,
      
     },
     animatedContainer: {
-      flexDirection: "row",
-      width: "100%",
+      flexDirection: 'row',
+      width: '100%',
       padding: 10,
-      backgroundColor: "#FFF",
+      backgroundColor: '#FFF',
       borderBottomWidth: 1,
-      borderColor: "lightgrey"
+      borderColor: 'lightgrey'
     },
     image: {
       height: 50,
@@ -27,18 +27,18 @@ const styles = StyleSheet.create({
     },
     txt: {
       fontSize: 14,
-      color: "black",
-      fontWeight: "bold"
+      color: 'black',
+      fontWeight: 'bold'
     },
     txtContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       paddingBottom: 5
     },
     subContainer: {
       flex: 1,
       marginLeft: 10,
-      justifyContent: "center"
+      justifyContent: 'center'
     }
   });
   export default styles;

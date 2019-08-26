@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -7,23 +7,23 @@ import {
   Animated,
   Dimensions,
   UIManager,
- } from "react-native";
-import PropTypes from "prop-types";
-import styles from './item-style';
+ } from 'react-native'
+import PropTypes from 'prop-types'
+import styles from './item-style'
 import BackgoundView from './backgoundView'
 
 class Item extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true);
+      UIManager.setLayoutAnimationEnabledExperimental(true)
     this.state = {
-      backgroundColor: "white",
+      backgroundColor: 'white',
       previousIndex: this.props.previous,
       currentIndex: this.props.index,
       undo: false
-    };
-    this.translateX = new Animated.Value(0);
+    }
+    this.translateX = new Animated.Value(0)
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -31,46 +31,46 @@ class Item extends Component {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
 
       onPanResponderMove: (e, gestureState) => {
-        this.setState({ backgroundColor: "#178044", undo: false });
-        Animated.event([null, { dx: this.translateX }])(e, gestureState);
+        this.setState({ backgroundColor: '#178044', undo: false })
+        Animated.event([null, { dx: this.translateX }])(e, gestureState)
       },
       onPanResponderRelease: (e, { vx, dx }) => {
-        this.touchRelease(vx, dx);
+        this.touchRelease(vx, dx)
       }
-    });
-  };
+    })
+  }
   touchRelease(vx, dx) {
-    const screenWidth = Dimensions.get("window").width;
+    const screenWidth = Dimensions.get('window').width
     if (Math.abs(vx) >= 0.5 || Math.abs(dx) >= 0.5 * screenWidth) {
       Animated.timing(this.translateX, {
         toValue: dx > 0 ? screenWidth : -screenWidth,
         duration: 200
       }).start(() => {
-        this.props.onRelease();
+        this.props.onRelease()
         setTimeout(() => {
           if (!this.state.undo) {
-            this.props.onGrant(this.props.index);
+            this.props.onGrant(this.props.index)
           }
-        }, 500);
-      });
+        }, 500)
+      })
     } else {
       Animated.spring(this.translateX, {
         toValue: 0,
         bounciness: 10,
-      }).start();
+      }).start()
     }
-  };
+  }
   touchUndo = () => {
-    this.setState({ undo: true });
+    this.setState({ undo: true })
     Animated.timing(this.translateX, {
       toValue: 0,
       duration: 200
-    }).start(this.props.onRelease(this.state.previousIndex));
-  };
+    }).start(this.props.onRelease(this.state.previousIndex))
+  }
 
   render() {
-    const { displayPicture, chat, time, userIdName,} = this.props.item;
-    const { backgoundView } = this.props;
+    const { displayPicture, chat, time, userIdName,} = this.props.item
+    const { backgoundView } = this.props
     return (
       <View>
         <View
@@ -104,9 +104,9 @@ class Item extends Component {
               <View>
                 <View style={styles.txtContainer}>
                   <Text style={styles.txt}>{userIdName}</Text>
-                  <Text style={{ color: "#418bfa" }}>{time}</Text>
+                  <Text style={{ color: '#418bfa' }}>{time}</Text>
                 </View>
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={{ flex: 1 }}>{chat}</Text>
                 </View>
               </View>
@@ -114,10 +114,10 @@ class Item extends Component {
           </Animated.View>
         </View>
       </View>
-    );
+    )
   }
 }
 Item.propTypes = {
   item:  PropTypes.object.isRequired,
-};
-export default Item;
+}
+export default Item

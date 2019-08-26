@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import React, { Component } from 'react'
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 class BackComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
         <TouchableOpacity>
-          <Text style={{ color: "white", fontSize: 18 }}>{"Undo"}</Text>
+          <Text style={{ color: 'white', fontSize: 18 }}>{'Undo'}</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Icon name={"archive"} size={25} color={"#FFF"} />
+          <Icon name={'archive'} size={25} color={'#FFF'} />
         </TouchableOpacity>
       </View>
     );
@@ -18,10 +18,10 @@ class BackComponent extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
-});
-export default BackComponent;
+})
+export default BackComponent
