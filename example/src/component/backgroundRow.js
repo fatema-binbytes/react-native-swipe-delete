@@ -15,7 +15,7 @@ class BackComponent extends Component {
                     <Text style={{ color: "white", fontSize: 18 }}>{'Undo'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Icon name={'add'} size={25} color={"#FFF"} />
+                    <Icon name={'archive'} size={25} color={"#FFF"} />
                 </TouchableOpacity>
             </View>
         );
