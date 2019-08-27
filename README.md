@@ -12,10 +12,12 @@ data
 	Datatype:	Array     
 	Description:	 Provide data in json format   
 	isRequire:	Yes
+	
 onSwipe
 	Datatype:	function(value) 
 	Description:	called on swipe item of array and return index of swipe item  
 	isRequire:	Yes
+	
 backgroundView  
 	Datatype:	function(value) 
 	Description:	custom component for backgroundView, you can pass your own component like button, icon, text
