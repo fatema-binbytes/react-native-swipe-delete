@@ -30,14 +30,6 @@
 ---
 <img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/example.gif" width="400" height="700">
 
-### Keywords 
-
-- npm-swipe-delete-list
-- react-native-swipe-delete
-- swipe-delete
-- flatList-delete-view
-- swipe-to-dismiss
-
 ### Clone
 
 - Clone this repo to your local machine using `https://github.com/fatema-binbytes/react-native-swipe-delete.git`
