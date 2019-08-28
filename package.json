@@ -13,7 +13,7 @@
     "flatList-delete-view"
   ],
   "author": "Fatema Patel",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.9.0"
