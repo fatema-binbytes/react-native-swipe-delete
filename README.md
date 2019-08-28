@@ -1,4 +1,4 @@
-# react-native-swipe-delete
+# react-native-swipe-delete-view 
 
 > This library is a List of rows that swipe to open, close and delete.It handles default native behavior such as closing rows when ListItem is deleted or when other rows are opend with ‘swipe-to-dismiss’ pattern.
 
