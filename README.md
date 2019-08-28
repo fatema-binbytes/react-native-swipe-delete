@@ -12,7 +12,7 @@
 | Props     | Datatype    | Description | isRequire |
 | --------|---------|-------|---------|
 | data  | 	Array  | Provide data in json format  | Yes |
-| onSwipe | function(value) | Called on swipe item of array and return index of swipe item | Yes |
+| onSwipe | function(value) | Called when swipe the item of array and return index of swiped item | Yes |
 | backgroundView | function(value) | Custom component for backgroundView, you can pass your own component like button, icon, text | No |
 
 ## Usage
