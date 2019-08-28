@@ -22,13 +22,13 @@
 ##### Swipe Delete Item
 ```javascript
  <Item
-    onSwipe={i => this.onDelete(i)}
+    onSwipe={i => console.log(i)}
     data={this.state.data}
     backgoundView={<BackgoundView />}
   />
 ```
 ---
-<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/example.gif" width="400" height="790">
+<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/example.gif" width="400" height="700">
 
 ### Keywords 
 
