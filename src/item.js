@@ -76,23 +76,15 @@ class Item extends Component {
         <View
           style={[
             styles.container,
-            {
-              backgroundColor: this.state.backgroundColor
-            }
+            { backgroundColor: this.state.backgroundColor }
           ]}
         >
           <View style={[styles.backRow]}>
-           {backgoundView ? backgoundView : <BackgoundView/>}
+           {backgoundView ? backgoundView : <BackgoundView onPress={this.touchUndo}/>}
           </View>
           <Animated.View
             style={[
-              {
-                transform: [
-                  {
-                    translateX: this.translateX
-                  }
-                ]
-              },
+              { transform: [{ translateX: this.translateX }] },
               styles.animatedContainer
             ]}
             {...this._panResponder.panHandlers}
