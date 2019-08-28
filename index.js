@@ -12,7 +12,8 @@ class App extends Component {
     this.state = {
       closedIndices: [],
       data:this.props.data,
-      currentLength:this.props.data.length
+      currentLength:this.props.data.length,
+      position:null
     }
   }
   shouldRender = index => {
@@ -40,7 +41,7 @@ class App extends Component {
       })
     }
     let data = this.props.data
-    this.props.onSwipe(index)
+    this.state.position == "left" ? this.props.onSwipeLeft(index): this.props.onSwipeRight(index)
     if(data.length < this.state.currentLength){
         delete this.state.closedIndices[this.state.closedIndices.length - 1]
       }
@@ -59,6 +60,7 @@ class App extends Component {
                 <View>
                   <Item
                     item={item}
+                    position={position => this.setState({position})}
                     onGrant={i => this.delete(i)}
                     onRelease={() => this.onRelease(index)}
                     previous={this.state.previous}
@@ -77,7 +79,8 @@ class App extends Component {
 }
 App.propTypes = {
   data:  PropTypes.array.isRequired,
-  onSwipe: PropTypes.func.isRequired,
+  onSwipeRight: PropTypes.func.isRequired,
+  onSwipeLeft: PropTypes.func.isRequired
 }
 
 export default App

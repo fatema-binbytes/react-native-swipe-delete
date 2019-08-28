@@ -46,6 +46,7 @@ class Item extends Component {
         toValue: dx > 0 ? screenWidth : -screenWidth,
         duration: 200
       }).start(() => {
+        this.props.position(dx > 0 ? "right" : "left")
         this.props.onRelease()
         setTimeout(() => {
           if (!this.state.undo) {
