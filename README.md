@@ -1,8 +1,8 @@
 # react-native-swipe-delete-view 
 
-> This library is a List of rows that swipe to open, close and delete.It handles default native behavior such as closing rows when ListItem is deleted or when other rows are opend with ‘swipe-to-dismiss’ pattern.
+ This library is a List of rows that swipe to open, close and delete.It handles default native behavior such as closing rows when ListItem is deleted or when other rows are opend with ‘swipe-to-dismiss’ pattern.
 
-> This pattern can be seen everywhere from Google Now to Android’s notifications, Gmail, etc.
+ This pattern can be seen everywhere from Google Now to Android’s notifications, Gmail, etc.
 
 ## Installation
 
@@ -12,7 +12,8 @@
 | Props     | Datatype    | Description | isRequire |
 | --------|---------|-------|---------|
 | data  | 	Array  | Provide data in json format  | Yes |
-| onSwipe | function(value) | Called when swipe the item of array and return index of swiped item | Yes |
+| onSwipeLeft | function(value) | Called when swipe the item of array left and return index of swiped item | Yes |
+| onSwipeRight | function(value) | Called when swipe the item of array right and return index of swiped item | Yes |
 | backgroundView | function(value) | Custom component for backgroundView, you can pass your own component like button, icon, text | No |
 
 ## Usage
@@ -21,11 +22,12 @@
 
 ##### Swipe Delete Item
 ```javascript
- <Item
-    onSwipe={i => console.log(i)}
-    data={this.state.data}
-    backgoundView={<BackgoundView />}
-  />
+    <Item 
+        onSwipeLeft={i => console.log(i)}
+        onSwipeRight={i => console.log(i)} 
+        data={this.state.data} 
+        backComponent={<BackComponent/>}
+      />
 ```
 ---
 <img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/example.gif" width="400" height="700">
