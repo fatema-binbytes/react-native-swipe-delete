@@ -29,7 +29,7 @@
       />
 ```
 ---
-<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/bothSideSwipe.gif" width="400" height="700">
+<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/bothSideSwipe.gif" width="300" height="500">
 
 ##### Swipe Left Only
 ```javascript
@@ -39,7 +39,7 @@
       />
 ```
 ---
-<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/swipeLeft.gif" width="400" height="700">
+<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/swipeLeft.gif" width="300" height="500">
 
 ##### Swipe Right Only
 ```javascript
@@ -49,7 +49,7 @@
        />
 ```
 ---
-<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/swipeRight.gif" width="400" height="700">
+<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/swipeRight.gif" width="300" height="500">
 
 ##### Swipe Delete Item with Custom component
 ```javascript
@@ -61,7 +61,7 @@
       />
 ```
 ---
-<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/addCustomComp.gif" width="400" height="700">
+<img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/addCustomComp.gif" width="300" height="500">
 
 ### Clone
 
