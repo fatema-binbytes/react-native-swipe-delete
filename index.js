@@ -13,7 +13,10 @@ class App extends Component {
       closedIndices: [],
       data:this.props.data,
       currentLength:this.props.data.length,
-      position:null
+      direction:null,
+      swipeOff: this.props.onSwipeLeft || this.props.onSwipeRight ? false : true,
+      swipeLeft: this.props.onSwipeLeft ? true : false,
+      swipeRight: this.props.onSwipeRight ? true : false
     }
   }
   shouldRender = index => {
@@ -32,7 +35,6 @@ class App extends Component {
         springDamping: 10
       }
     }
-   
     if (this.state.previous != -1) {
       LayoutAnimation.configureNext(CustomLayoutSpring)
 
@@ -41,10 +43,35 @@ class App extends Component {
       })
     }
     let data = this.props.data
-    this.state.position == "left" ? this.props.onSwipeLeft(index): this.props.onSwipeRight(index)
+    this.onSwipe(index)
     if(data.length < this.state.currentLength){
-        delete this.state.closedIndices[this.state.closedIndices.length - 1]
+       delete this.state.closedIndices[this.state.closedIndices.length - 1]
       }
+      console.log(this.state.closedIndices,data,data.length < this.state.currentLength)
+  }
+  onSwipe(index) {
+    if( this.props.onSwipeLeft && !this.props.onSwipeRight ) {
+      if( this.state.direction == "left" ) {
+        alert('Item swiped left side')
+        this.props.onSwipeLeft(index) 
+      }
+    } else if( this.props.onSwipeRight  && !this.props.onSwipeLeft) {
+        if( this.state.direction == "right" ) {
+          alert('Item swiped right side')
+           this.props.onSwipeRight(index) 
+        }
+    } else if( this.props.onSwipeLeft && this.props.onSwipeRight ) {
+     if( this.state.direction == "left" ) {
+      alert('Item swiped left side')
+        this.props.onSwipeLeft(index) 
+      } else {
+        alert('Item swiped right side')
+        this.props.onSwipeRight(index)
+      }
+    } 
+    else {
+      this.setState({swipeOff:true})
+    }
   }
   onRelease(index) {
     this.setState({ previous: index })
@@ -60,7 +87,10 @@ class App extends Component {
                 <View>
                   <Item
                     item={item}
-                    position={position => this.setState({position})}
+                    direction={direction => this.setState({direction})}
+                    swipeOff={this.state.swipeOff}
+                    swipeLeft={this.state.swipeLeft}
+                    swipeRight={this.state.swipeRight}
                     onGrant={i => this.delete(i)}
                     onRelease={() => this.onRelease(index)}
                     previous={this.state.previous}
@@ -79,8 +109,8 @@ class App extends Component {
 }
 App.propTypes = {
   data:  PropTypes.array.isRequired,
-  onSwipeRight: PropTypes.func.isRequired,
-  onSwipeLeft: PropTypes.func.isRequired
+  onSwipeRight: PropTypes.func,
+  onSwipeLeft: PropTypes.func
 }
 
 export default App

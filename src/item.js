@@ -29,37 +29,80 @@ class Item extends Component {
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-
       onPanResponderMove: (e, gestureState) => {
-        this.setState({ backgroundColor: '#178044', undo: false })
-        Animated.event([null, { dx: this.translateX }])(e, gestureState)
+        if(!this.props.swipeOff) {
+          const absDx = Math.floor(gestureState.dx)
+          this.setState({ backgroundColor: '#178044', undo: false })
+          if( this.props.swipeLeft && !this.props.swipeRight ) {
+            const translate = absDx < 0 ? this.translateX : null
+            this.handlePanResponderMove(translate, e, gestureState) 
+          }
+          if( this.props.swipeRight && !this.props.swipeLeft ) {
+            const translate = absDx > 0 ? this.translateX : null
+            this.handlePanResponderMove(translate, e, gestureState)
+           }
+          if( this.props.swipeLeft && this.props.swipeRight ) {
+            const translate = this.translateX 
+            this.handlePanResponderMove(translate, e, gestureState)
+          }
+        }  
+        else {
+          null 
+        }
       },
       onPanResponderRelease: (e, { vx, dx }) => {
-        this.touchRelease(vx, dx)
+        !this.props.swipeOff ?
+          this.panResponderRelease(vx,dx) 
+          : null 
       }
     })
   }
-  touchRelease(vx, dx) {
+  handlePanResponderMove( translate, e, gestureState ) {
+    Animated.event([null, { dx: translate }])(e, gestureState)
+  }
+  panResponderRelease(vx, dx) {
+    const screenWidth = Dimensions.get('window').width
+    if(this.props.swipeLeft && !this.props.swipeRight) {
+      const toValue = dx < 0 ? -screenWidth : 0
+      const condition = dx < 0 
+      this.handlePanResponderRelease(vx, dx, toValue, condition)
+    } 
+    if(this.props.swipeRight && !this.props.swipeLeft) {
+      const toValue = dx > 0 ? screenWidth : 0
+      const condition = dx > 0
+      this.handlePanResponderRelease(vx, dx, toValue, condition)
+      }
+    if(this.props.swipeRight && this.props.swipeLeft) {
+      const toValue = dx < 0 ? -screenWidth : screenWidth
+      const condition = true
+      this.handlePanResponderRelease(vx, dx, toValue, condition)
+    } else {
+      null
+    }
+  }
+  handlePanResponderRelease(vx, dx, toValue, condition) {
     const screenWidth = Dimensions.get('window').width
     if (Math.abs(vx) >= 0.5 || Math.abs(dx) >= 0.5 * screenWidth) {
-      Animated.timing(this.translateX, {
-        toValue: dx > 0 ? screenWidth : -screenWidth,
+      Animated.timing( this.translateX, {
+        toValue: toValue,
         duration: 200
       }).start(() => {
-        this.props.position(dx > 0 ? "right" : "left")
-        this.props.onRelease()
+        this.props.direction( dx > 0 ? "right" : "left" )
+       condition ? (
+        this.props.onRelease(),
         setTimeout(() => {
           if (!this.state.undo) {
-            this.props.onGrant(this.props.index)
+            this.props.onGrant( this.props.index)
           }
-        }, 500)
+        }, 500)) : null
       })
     } else {
-      Animated.spring(this.translateX, {
+      Animated.spring( this.translateX, {
         toValue: 0,
         bounciness: 10,
       }).start()
-    }
+  }
+
   }
   touchUndo = () => {
     this.setState({ undo: true })
@@ -85,7 +128,7 @@ class Item extends Component {
           </View>
           <Animated.View
             style={[
-              { transform: [{ translateX: this.translateX }] },
+              { transform: [ {translateX: this.translateX }] },
               styles.animatedContainer
             ]}
             {...this._panResponder.panHandlers}
