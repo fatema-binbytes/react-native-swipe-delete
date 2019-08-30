@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import { View, FlatList, UIManager, LayoutAnimation } from 'react-native'
 
 import Item from './src/item'
+import {
+  Left,
+  Right,
+  BackgroundColor,
+  BothSwipe,
+  LeftSwipe,
+  RightSwipe,
+  CustomLayoutSpring
+} from './src/constant'
 import PropTypes from 'prop-types'
 
 class App extends Component {
@@ -23,19 +32,7 @@ class App extends Component {
     return this.state.closedIndices.indexOf(index) === -1
   }
   delete(index) {
-    var CustomLayoutSpring = {
-      duration: 200,
-      create: {
-        type: LayoutAnimation.Types.spring,
-        property: LayoutAnimation.Properties.scaleXY,
-        springDamping: 10
-      },
-      update: {
-        type: LayoutAnimation.Types.spring,
-        springDamping: 10
-      }
-    }
-    if (this.state.previous != -1) {
+   if (this.state.previous != -1) {
       LayoutAnimation.configureNext(CustomLayoutSpring)
 
       this.setState({
@@ -49,20 +46,21 @@ class App extends Component {
       }
       console.log(this.state.closedIndices,data,data.length < this.state.currentLength)
   }
+  
   onSwipe(index) {
-    if( this.props.onSwipeLeft && !this.props.onSwipeRight ) {
-      if( this.state.direction == "left" ) {
+    if( LeftSwipe ) {
+      if( this.state.direction == Left ) {
         alert('Item swiped left side')
         this.props.onSwipeLeft(index) 
       }
-    } else if( this.props.onSwipeRight  && !this.props.onSwipeLeft) {
-        if( this.state.direction == "right" ) {
+    } else if( RightSwipe ) {
+        if( this.state.direction == Right ) {
           alert('Item swiped right side')
-           this.props.onSwipeRight(index) 
+          this.props.onSwipeRight(index) 
         }
-    } else if( this.props.onSwipeLeft && this.props.onSwipeRight ) {
-     if( this.state.direction == "left" ) {
-      alert('Item swiped left side')
+    } else if( BothSwipe ) {
+     if( this.state.direction == Left ) {
+        alert('Item swiped left side')
         this.props.onSwipeLeft(index) 
       } else {
         alert('Item swiped right side')
@@ -73,12 +71,14 @@ class App extends Component {
       this.setState({swipeOff:true})
     }
   }
+
   onRelease(index) {
     this.setState({ previous: index })
   }
+
   render() {
     return (
-      <View style={{ backgroundColor: '#178044' }}>
+      <View style={{ backgroundColor: BackgroundColor }}>
         <FlatList
           data={this.props.data.slice()}
           renderItem={({ item, index }) => {

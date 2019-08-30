@@ -6,110 +6,114 @@ import {
   PanResponder,
   Animated,
   Dimensions,
-  UIManager,
  } from 'react-native'
 import PropTypes from 'prop-types'
+
 import styles from './item-style'
 import BackgoundView from './backgoundView'
+import {
+  Left,
+  Right,
+  BackgroundColor,
+  BothSwipe,
+  LeftSwipe,
+  RightSwipe,
+  Duration,
+  Zero
+} from './constant'
 
 class Item extends Component {
   constructor(props) {
     super(props)
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true)
     this.state = {
       backgroundColor: 'white',
       previousIndex: this.props.previous,
       currentIndex: this.props.index,
       undo: false
     }
-    this.translateX = new Animated.Value(0)
+    this.translateX = new Animated.Value(Zero)
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
       onPanResponderMove: (e, gestureState) => {
-        if(!this.props.swipeOff) {
-          const absDx = Math.floor(gestureState.dx)
-          this.setState({ backgroundColor: '#178044', undo: false })
-          if( this.props.swipeLeft && !this.props.swipeRight ) {
-            const translate = absDx < 0 ? this.translateX : null
-            this.handlePanResponderMove(translate, e, gestureState) 
-          }
-          if( this.props.swipeRight && !this.props.swipeLeft ) {
-            const translate = absDx > 0 ? this.translateX : null
-            this.handlePanResponderMove(translate, e, gestureState)
-           }
-          if( this.props.swipeLeft && this.props.swipeRight ) {
-            const translate = this.translateX 
-            this.handlePanResponderMove(translate, e, gestureState)
-          }
-        }  
-        else {
-          null 
-        }
+        !this.props.swipeOff ? this.handlePanResponderMove(e, gestureState) : null 
       },
       onPanResponderRelease: (e, { vx, dx }) => {
-        !this.props.swipeOff ?
-          this.panResponderRelease(vx,dx) 
-          : null 
+        !this.props.swipeOff ? this.panResponderRelease(vx,dx) : null 
       }
     })
   }
-  handlePanResponderMove( translate, e, gestureState ) {
-    Animated.event([null, { dx: translate }])(e, gestureState)
+
+  handlePanResponderMove(e, gestureState) {
+    const absDx = Math.floor(gestureState.dx)
+    this.setState({ backgroundColor: BackgroundColor, undo: false })
+    if( LeftSwipe ) {
+      const translate = absDx < Zero ? this.translateX : null
+      Animated.event([null, { dx: translate }])(e, gestureState) 
+    }
+    if( RightSwipe ) {
+      const translate = absDx > Zero ? this.translateX : null
+      Animated.event([null, { dx: translate }])(e, gestureState)
+      }
+    if( BothSwipe ) {
+      const translate = this.translateX 
+      Animated.event([null, { dx: translate }])(e, gestureState)
+    }
   }
+  
   panResponderRelease(vx, dx) {
     const screenWidth = Dimensions.get('window').width
-    if(this.props.swipeLeft && !this.props.swipeRight) {
-      const toValue = dx < 0 ? -screenWidth : 0
-      const condition = dx < 0 
+    if( LeftSwipe ) {
+      const toValue = dx < Zero ? -screenWidth : Zero
+      const condition = dx < Zero 
       this.handlePanResponderRelease(vx, dx, toValue, condition)
     } 
-    if(this.props.swipeRight && !this.props.swipeLeft) {
-      const toValue = dx > 0 ? screenWidth : 0
-      const condition = dx > 0
+    if( RightSwipe ) {
+      const toValue = dx > Zero ? screenWidth : Zero
+      const condition = dx > Zero
       this.handlePanResponderRelease(vx, dx, toValue, condition)
       }
-    if(this.props.swipeRight && this.props.swipeLeft) {
-      const toValue = dx < 0 ? -screenWidth : screenWidth
+    if( BothSwipe ) {
+      const toValue = dx < Zero ? -screenWidth : screenWidth
       const condition = true
       this.handlePanResponderRelease(vx, dx, toValue, condition)
     } else {
       null
     }
   }
+
   handlePanResponderRelease(vx, dx, toValue, condition) {
     const screenWidth = Dimensions.get('window').width
     if (Math.abs(vx) >= 0.5 || Math.abs(dx) >= 0.5 * screenWidth) {
       Animated.timing( this.translateX, {
         toValue: toValue,
-        duration: 200
+        duration: Duration
       }).start(() => {
-        this.props.direction( dx > 0 ? "right" : "left" )
+        this.props.direction( dx > Zero ? Right : Left )
        condition ? (
         this.props.onRelease(),
         setTimeout(() => {
           if (!this.state.undo) {
-            this.props.onGrant( this.props.index)
+            this.props.onGrant(this.props.index)
           }
         }, 500)) : null
       })
     } else {
       Animated.spring( this.translateX, {
-        toValue: 0,
+        toValue: Zero,
         bounciness: 10,
       }).start()
+    }
   }
 
-  }
   touchUndo = () => {
     this.setState({ undo: true })
     Animated.timing(this.translateX, {
-      toValue: 0,
-      duration: 200
-    }).start(this.props.onRelease(this.state.previousIndex))
+      toValue: Zero,
+      duration: Duration
+    }).start( this.props.onRelease(this.state.previousIndex) )
   }
 
   render() {
@@ -123,8 +127,8 @@ class Item extends Component {
             { backgroundColor: this.state.backgroundColor }
           ]}
         >
-          <View style={[styles.backRow]}>
-           {backgoundView ? backgoundView : <BackgoundView onPress={this.touchUndo}/>}
+          <View style={[ styles.backRow ]}>
+           { backgoundView ? backgoundView : <BackgoundView onPress={ this.touchUndo }/> }
           </View>
           <Animated.View
             style={[
@@ -134,16 +138,16 @@ class Item extends Component {
             {...this._panResponder.panHandlers}
           >
             <View style={{ paddingLeft: 2 }}>
-              <Image style={styles.image} source={displayPicture} />
+              <Image style={ styles.image } source={ displayPicture } />
             </View>
-            <View style={styles.subContainer}>
+            <View style={ styles.subContainer }>
               <View>
-                <View style={styles.txtContainer}>
-                  <Text style={styles.txt}>{userIdName}</Text>
-                  <Text style={{ color: '#418bfa' }}>{time}</Text>
+                <View style={ styles.txtContainer }>
+                  <Text style={ styles.txt }>{ userIdName }</Text>
+                  <Text style={{ color: '#418bfa' }}>{ time }</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1 }}>{chat}</Text>
+                  <Text style={{ flex: 1 }}>{ chat }</Text>
                 </View>
               </View>
             </View>
