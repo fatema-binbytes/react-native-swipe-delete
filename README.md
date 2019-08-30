@@ -57,7 +57,7 @@
         onSwipeLeft={i => this.onSwipeLeft(i)}
         onSwipeRight={i => this.onSwipeRight(i)} 
         data={this.state.data} 
-        backgoundView={<BackComponent/>}
+        backgoundView={<BackgoundView />}
       />
 ```
 ---
