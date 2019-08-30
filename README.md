@@ -63,7 +63,7 @@
 ---
 <img src="https://github.com/fatema-binbytes/react-native-swipe-delete/blob/master/example/images/addCustomComp.gif" width="300" height="500">
 
-### Clone
+## Clone
 
 - Clone this repo to your local machine using `https://github.com/fatema-binbytes/react-native-swipe-delete.git`
 
