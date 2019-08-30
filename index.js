@@ -2,16 +2,11 @@ import React, { Component } from 'react'
 import { View, FlatList, UIManager, LayoutAnimation } from 'react-native'
 
 import Item from './src/item'
-import {
-  Left,
-  Right,
-  BackgroundColor,
-  BothSwipe,
-  LeftSwipe,
-  RightSwipe,
-  CustomLayoutSpring
-} from './src/constant'
 import PropTypes from 'prop-types'
+
+let Left = 'left'
+let Right = 'right'
+let BackgroundColor = '#178044'
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +27,18 @@ class App extends Component {
     return this.state.closedIndices.indexOf(index) === -1
   }
   delete(index) {
+  const CustomLayoutSpring = {
+      duration: 200,
+      create: {
+        type: LayoutAnimation.Types.spring,
+        property: LayoutAnimation.Properties.scaleXY,
+        springDamping: 10
+      },
+      update: {
+        type: LayoutAnimation.Types.spring,
+        springDamping: 10
+      }
+    }
    if (this.state.previous != -1) {
       LayoutAnimation.configureNext(CustomLayoutSpring)
 
@@ -48,22 +55,22 @@ class App extends Component {
   }
   
   onSwipe(index) {
-    if( LeftSwipe ) {
+    if(this.props.onSwipeLeft && !this.props.onSwipeRight ) {
       if( this.state.direction == Left ) {
-        alert('Item swiped left side')
+        // alert('Item swiped left side')
         this.props.onSwipeLeft(index) 
       }
-    } else if( RightSwipe ) {
+    } else if( !this.props.onSwipeLeft && this.props.onSwipeRight ) {
         if( this.state.direction == Right ) {
-          alert('Item swiped right side')
-          this.props.onSwipeRight(index) 
+          // alert('Item swiped right side')
+           this.props.onSwipeRight(index) 
         }
-    } else if( BothSwipe ) {
+    } else if( this.props.onSwipeLeft && this.props.onSwipeRight ) {
      if( this.state.direction == Left ) {
-        alert('Item swiped left side')
+      // alert('Item swiped left side')
         this.props.onSwipeLeft(index) 
       } else {
-        alert('Item swiped right side')
+        // alert('Item swiped right side')
         this.props.onSwipeRight(index)
       }
     } 

@@ -11,16 +11,12 @@ import PropTypes from 'prop-types'
 
 import styles from './item-style'
 import BackgoundView from './backgoundView'
-import {
-  Left,
-  Right,
-  BackgroundColor,
-  BothSwipe,
-  LeftSwipe,
-  RightSwipe,
-  Duration,
-  Zero
-} from './constant'
+
+let Left = 'left'
+let Right = 'right'
+let Duration = 200
+let Zero = 0
+let BackgroundColor = '#178044'
 
 class Item extends Component {
   constructor(props) {
@@ -49,15 +45,15 @@ class Item extends Component {
   handlePanResponderMove(e, gestureState) {
     const absDx = Math.floor(gestureState.dx)
     this.setState({ backgroundColor: BackgroundColor, undo: false })
-    if( LeftSwipe ) {
+    if( this.props.swipeLeft && !this.props.swipeRight ) {
       const translate = absDx < Zero ? this.translateX : null
       Animated.event([null, { dx: translate }])(e, gestureState) 
     }
-    if( RightSwipe ) {
+    if( this.props.swipeRight && !this.props.swipeLeft ) {
       const translate = absDx > Zero ? this.translateX : null
       Animated.event([null, { dx: translate }])(e, gestureState)
       }
-    if( BothSwipe ) {
+    if( this.props.swipeLeft && this.props.swipeRight ) {
       const translate = this.translateX 
       Animated.event([null, { dx: translate }])(e, gestureState)
     }
@@ -65,17 +61,17 @@ class Item extends Component {
   
   panResponderRelease(vx, dx) {
     const screenWidth = Dimensions.get('window').width
-    if( LeftSwipe ) {
+    if(this.props.swipeLeft && !this.props.swipeRight ) {
       const toValue = dx < Zero ? -screenWidth : Zero
       const condition = dx < Zero 
       this.handlePanResponderRelease(vx, dx, toValue, condition)
     } 
-    if( RightSwipe ) {
+    if( this.props.swipeRight && !this.props.swipeLeft ) {
       const toValue = dx > Zero ? screenWidth : Zero
       const condition = dx > Zero
       this.handlePanResponderRelease(vx, dx, toValue, condition)
       }
-    if( BothSwipe ) {
+    if( this.props.swipeLeft && this.props.swipeRight ) {
       const toValue = dx < Zero ? -screenWidth : screenWidth
       const condition = true
       this.handlePanResponderRelease(vx, dx, toValue, condition)
