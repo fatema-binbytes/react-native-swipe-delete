@@ -12,13 +12,14 @@ import PropTypes from 'prop-types'
 import styles from './item-style'
 import BackgoundView from './backgoundView'
 
-let Left = 'left'
-let Right = 'right'
-let Duration = 200
-let Zero = 0
-let BackgroundColor = '#178044'
+let left = 'left'
+let right = 'right'
+let duration = 200
+let zero = 0
+let backgroundColor = '#178044'
+let screenWidth = Dimensions.get('window').width
 
-class Item extends Component {
+class SwipeItem extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,7 +28,7 @@ class Item extends Component {
       currentIndex: this.props.index,
       undo: false
     }
-    this.translateX = new Animated.Value(Zero)
+    this.translateX = new Animated.Value(zero)
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -44,13 +45,13 @@ class Item extends Component {
 
   handlePanResponderMove(e, gestureState) {
     const absDx = Math.floor(gestureState.dx)
-    this.setState({ backgroundColor: BackgroundColor, undo: false })
+    this.setState({ backgroundColor: backgroundColor, undo: false })
     if( this.props.swipeLeft && !this.props.swipeRight ) {
-      const translate = absDx < Zero ? this.translateX : null
+      const translate = absDx < zero ? this.translateX : null
       Animated.event([null, { dx: translate }])(e, gestureState) 
     }
     if( this.props.swipeRight && !this.props.swipeLeft ) {
-      const translate = absDx > Zero ? this.translateX : null
+      const translate = absDx > zero ? this.translateX : null
       Animated.event([null, { dx: translate }])(e, gestureState)
       }
     if( this.props.swipeLeft && this.props.swipeRight ) {
@@ -60,19 +61,18 @@ class Item extends Component {
   }
   
   panResponderRelease(vx, dx) {
-    const screenWidth = Dimensions.get('window').width
     if(this.props.swipeLeft && !this.props.swipeRight ) {
-      const toValue = dx < Zero ? -screenWidth : Zero
-      const condition = dx < Zero 
+      const toValue = dx < zero ? -screenWidth : zero
+      const condition = dx < zero 
       this.handlePanResponderRelease(vx, dx, toValue, condition)
     } 
     if( this.props.swipeRight && !this.props.swipeLeft ) {
-      const toValue = dx > Zero ? screenWidth : Zero
-      const condition = dx > Zero
+      const toValue = dx > zero ? screenWidth : zero
+      const condition = dx > zero
       this.handlePanResponderRelease(vx, dx, toValue, condition)
       }
     if( this.props.swipeLeft && this.props.swipeRight ) {
-      const toValue = dx < Zero ? -screenWidth : screenWidth
+      const toValue = dx < zero ? -screenWidth : screenWidth
       const condition = true
       this.handlePanResponderRelease(vx, dx, toValue, condition)
     } else {
@@ -81,13 +81,12 @@ class Item extends Component {
   }
 
   handlePanResponderRelease(vx, dx, toValue, condition) {
-    const screenWidth = Dimensions.get('window').width
     if (Math.abs(vx) >= 0.5 || Math.abs(dx) >= 0.5 * screenWidth) {
       Animated.timing( this.translateX, {
         toValue: toValue,
-        duration: Duration
+        duration: duration
       }).start(() => {
-        this.props.direction( dx > Zero ? Right : Left )
+        this.props.direction( dx > zero ? right : left )
        condition ? (
         this.props.onRelease(),
         setTimeout(() => {
@@ -98,7 +97,7 @@ class Item extends Component {
       })
     } else {
       Animated.spring( this.translateX, {
-        toValue: Zero,
+        toValue: zero,
         bounciness: 10,
       }).start()
     }
@@ -107,13 +106,13 @@ class Item extends Component {
   touchUndo = () => {
     this.setState({ undo: true })
     Animated.timing(this.translateX, {
-      toValue: Zero,
-      duration: Duration
+      toValue: zero,
+      duration: duration
     }).start( this.props.onRelease(this.state.previousIndex) )
   }
 
   render() {
-    const { displayPicture, chat, time, userIdName,} = this.props.item
+    const { displayPicture, chat, time, userIdName } = this.props.item
     const { backgoundView } = this.props
     return (
       <View>
@@ -153,7 +152,7 @@ class Item extends Component {
     )
   }
 }
-Item.propTypes = {
+SwipeItem.propTypes = {
   item:  PropTypes.object.isRequired,
 }
-export default Item
+export default SwipeItem
