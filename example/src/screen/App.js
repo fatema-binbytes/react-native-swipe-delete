@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Item from 'react-native-swipe-delete-view'
+import SwipeItem from 'react-native-swipe-delete-view'
 
 import BackgoundView from '../component/backgoundView'
 
@@ -86,17 +86,15 @@ class App extends Component {
   }
   
   onSwipeLeft(i) {
-   //this.state.data.splice(i, 1)
-    console.log(i)
+    alert('Item Swiped Left Side')
   }
 
   onSwipeRight(i) {
-    //this.state.data.splice(i, 1)
-    console.log(i)
-  }
+    alert('Item Swiped Right Side')
+   }
    render() {
     return ( 
-      <Item 
+      <SwipeItem 
         onSwipeLeft={i => this.onSwipeLeft(i)}
         onSwipeRight={i => this.onSwipeRight(i)} 
         data={this.state.data} 

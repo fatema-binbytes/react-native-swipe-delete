@@ -38,7 +38,7 @@ class SwipeItem extends Component {
         !this.props.swipeOff ? this.handlePanResponderMove(e, gestureState) : null 
       },
       onPanResponderRelease: (e, { vx, dx }) => {
-        !this.props.swipeOff ? this.panResponderRelease(vx,dx) : null 
+        !this.props.swipeOff ? this.panResponderRelease(vx,dx) : alert("To Swipe Item Pass Swipe props") 
       }
     })
   }
