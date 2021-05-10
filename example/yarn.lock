@@ -3701,9 +3701,9 @@ lodash.throttle@^4.1.1:
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -4854,8 +4854,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-react-native-swipe-delete-view@/Users/binbytes-3/Desktop/react-native-swipe-delete-view:
-  version "1.0.2"
+react-native-swipe-delete-view@^1.0.3:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-delete-view/-/react-native-swipe-delete-view-1.0.5.tgz#3839e4ba23f1f4df5fd99eb77de7dd2e405a474a"
+  integrity sha512-vBt8KQ5BBFn0QiicCsr92/KGCmLtODVu4MdvjiGMJOH5DrmmU7Whi+keqULGedN0Fk6P+u+XyUzitNmbnvthRQ==
   dependencies:
     prop-types "^15.7.2"
     react "^16.9.0"
