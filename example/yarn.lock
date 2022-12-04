@@ -1884,9 +1884,9 @@ decamelize@^1.1.1, decamelize@^1.2.0:
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-extend@^0.6.0:
   version "0.6.0"
@@ -4854,8 +4854,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-react-native-swipe-delete-view@/Users/binbytes-3/Desktop/react-native-swipe-delete-view:
-  version "1.0.2"
+react-native-swipe-delete-view@^1.0.3:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-swipe-delete-view/-/react-native-swipe-delete-view-1.0.5.tgz#3839e4ba23f1f4df5fd99eb77de7dd2e405a474a"
+  integrity sha512-vBt8KQ5BBFn0QiicCsr92/KGCmLtODVu4MdvjiGMJOH5DrmmU7Whi+keqULGedN0Fk6P+u+XyUzitNmbnvthRQ==
   dependencies:
     prop-types "^15.7.2"
     react "^16.9.0"
